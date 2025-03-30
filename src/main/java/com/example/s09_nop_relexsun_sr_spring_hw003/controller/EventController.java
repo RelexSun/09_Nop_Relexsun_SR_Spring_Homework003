@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.time.Instant;
 import java.util.List;
@@ -52,7 +53,7 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse<Event>> createEvent(@RequestBody EventRequest request) {
+    public ResponseEntity<APIResponse<Event>> createEvent(@RequestBody @Valid EventRequest request) {
         Event event = this.eventServiceImplementation.createEvent(request);
         APIResponse<Event> response = APIResponse.<Event>builder()
                 .message("Event successfully created.")
@@ -64,7 +65,7 @@ public class EventController {
     }
 
     @PutMapping("/{event-id}")
-    public ResponseEntity<APIResponse<Event>> updateEvent(@PathVariable("event-id") Long eventId, @RequestBody EventRequest request) {
+    public ResponseEntity<APIResponse<Event>> updateEvent(@PathVariable("event-id") Long eventId, @RequestBody @Valid EventRequest request) {
         if(this.venueServiceImplementation.getVenueById(request.getVenueId()) == null) throw new NotFoundException("Venue "+ request.getVenueId() +" not found.");
         for(Long attendeeId : request.getAttendeesId()) {
             Attendee attendee = this.attendeesServiceImplementation.getAttendeesById(attendeeId);
