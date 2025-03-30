@@ -3,9 +3,10 @@ package com.example.s09_nop_relexsun_sr_spring_hw003.controller;
 import com.example.s09_nop_relexsun_sr_spring_hw003.exception.NotFoundException;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.request.VenueRequest;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.response.APIResponse;
-import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.Attendee;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.Venue;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.VenueServiceImplementation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/venues")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class VenueController {
     private final VenueServiceImplementation venueServiceImplementation;
 

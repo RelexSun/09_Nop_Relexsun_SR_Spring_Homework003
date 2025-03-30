@@ -5,6 +5,7 @@ import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.request.AttendeesR
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.response.APIResponse;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.Attendee;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.AttendeesServiceImplementation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/attendees")
+@SecurityRequirement(name = "bearerAuth")
 public class AttendeesController {
     private final AttendeesServiceImplementation attendeesServiceImplementation;
 

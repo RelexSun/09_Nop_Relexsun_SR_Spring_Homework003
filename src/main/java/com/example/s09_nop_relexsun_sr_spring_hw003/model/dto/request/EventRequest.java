@@ -19,7 +19,7 @@ public class EventRequest {
     @NotBlank(message = "Names are not allowed to be blank")
     private String eventName;
     @NotNull
-    @NotBlank(message = "Dates are not allowed to be blank")
+//    @NotBlank(message = "Dates are not allowed to be blank")
     private LocalDateTime eventDate;
     private Long venueId;
     private List<Long> attendeesId;

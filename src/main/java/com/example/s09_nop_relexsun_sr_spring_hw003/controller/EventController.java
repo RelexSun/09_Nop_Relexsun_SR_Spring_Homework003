@@ -8,6 +8,8 @@ import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.Event;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.AttendeesServiceImplementation;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.EventServiceImplementation;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.VenueServiceImplementation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/events")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class EventController {
     private final EventServiceImplementation eventServiceImplementation;
     private final AttendeesServiceImplementation attendeesServiceImplementation;
