@@ -38,7 +38,7 @@ public class AttendeesController {
     public ResponseEntity<APIResponse<Attendee>> getAttendeesById(@PathVariable("attendees-id") Long attendeesId) {
         Attendee attendee = this.attendeesServiceImplementation.getAttendeesById(attendeesId);
 
-        if (attendee == null) throw new NotFoundException("Attendees not found");
+        if(attendee == null) throw new NotFoundException("Attendee "+attendeesId+" not found.");
 
         APIResponse<Attendee> response = APIResponse.<Attendee>builder()
                 .message("All attendees have been successfully fetched.")
@@ -64,7 +64,7 @@ public class AttendeesController {
     @PutMapping("/{attendees-id}")
     public ResponseEntity<APIResponse<Attendee>> updateAttendee(@PathVariable("attendees-id") Long id, @RequestBody @Valid AttendeesRequest request) {
         Attendee attendee = this.attendeesServiceImplementation.updateAttendee(id, request);
-        if (attendee == null) throw new NotFoundException("Attendees not found");
+        if(attendee == null) throw new NotFoundException("Attendee "+id+" not found.");
         APIResponse<Attendee> response = APIResponse.<Attendee>builder().message("Attendee successfully updated").payload(attendee).status(HttpStatus.OK).timestamp(Instant.now()).build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -72,7 +72,7 @@ public class AttendeesController {
     @DeleteMapping("/{attendees-id}")
     public ResponseEntity<APIResponse<String>> deleteAttendee(@PathVariable("attendees-id") Long id){
         Attendee attendee = this.attendeesServiceImplementation.deleteAttendee(id);
-        if (attendee == null) throw new NotFoundException("Attendees not found");
+        if(attendee == null) throw new NotFoundException("Attendee "+id+" not found.");
         APIResponse<String> response = APIResponse.<String>builder().message("Attendee successfully deleted").payload(null).status(HttpStatus.OK).timestamp(Instant.now()).build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

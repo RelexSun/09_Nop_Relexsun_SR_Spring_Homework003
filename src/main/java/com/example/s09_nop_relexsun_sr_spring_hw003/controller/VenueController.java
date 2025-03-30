@@ -38,7 +38,7 @@ public class VenueController {
     @GetMapping("/{venue-id}")
     public ResponseEntity<APIResponse<Venue>> getVenueById(@PathVariable("venue-id") Long id) {
         Venue venue = this.venueServiceImplementation.getVenueById(id);
-        if (venue == null) throw new NotFoundException("Venue not found");
+        if (venue == null) throw new NotFoundException("Venue "+id+" not found");
         APIResponse<Venue> response = APIResponse.<Venue>builder()
                 .message("All venues successfully fetch.")
                 .payload(venue)
@@ -65,7 +65,7 @@ public class VenueController {
     @PutMapping("/{venue-id}")
     public ResponseEntity<APIResponse<Venue>> updateVenue(@PathVariable("venue-id") Long id, @RequestBody VenueRequest request) {
         Venue venue = this.venueServiceImplementation.updateVenue(id, request);
-        if (venue == null) throw new NotFoundException("Venue not found");
+        if (venue == null) throw new NotFoundException("Venue "+id+" not found");
         APIResponse<Venue> response = APIResponse.<Venue>builder()
                 .message("Venue has updated successfully.")
                 .payload(venue)
@@ -78,7 +78,7 @@ public class VenueController {
     @DeleteMapping("/{venue-id}")
     public ResponseEntity<APIResponse<String>> deleteVenueById(@PathVariable("venue-id") Long id){
         Venue venue = this.venueServiceImplementation.deleteVenueById(id);
-        if (venue == null) throw new NotFoundException("Venue not found");
+        if (venue == null) throw new NotFoundException("Venue "+id+" not found");
         APIResponse<String> response = APIResponse.<String>builder().message("Venue successfully deleted").payload(null).status(HttpStatus.OK).timestamp(Instant.now()).build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

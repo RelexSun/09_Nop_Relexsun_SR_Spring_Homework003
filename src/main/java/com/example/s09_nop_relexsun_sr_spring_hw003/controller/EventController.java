@@ -5,7 +5,6 @@ import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.request.EventReque
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.response.APIResponse;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.Attendee;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.Event;
-import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.Venue;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.AttendeesServiceImplementation;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.EventServiceImplementation;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.implement.VenueServiceImplementation;
@@ -42,7 +41,7 @@ public class EventController {
     @GetMapping("/{event-id}")
     public ResponseEntity<APIResponse<Event>> getEventById(@PathVariable("event-id") Long eventId) {
         Event event = this.eventServiceImplementation.getEventById(eventId);
-        if(event == null) throw new NotFoundException("Event not found.");
+        if(event == null) throw new NotFoundException("Event "+eventId+" not found.");
         APIResponse<Event> response = APIResponse.<Event>builder()
                 .message("Event successfully fetched.")
                 .payload(event)
@@ -66,13 +65,13 @@ public class EventController {
 
     @PutMapping("/{event-id}")
     public ResponseEntity<APIResponse<Event>> updateEvent(@PathVariable("event-id") Long eventId, @RequestBody EventRequest request) {
-        if(this.venueServiceImplementation.getVenueById(request.getVenueId()) == null) throw new NotFoundException("Venue not found.");
+        if(this.venueServiceImplementation.getVenueById(request.getVenueId()) == null) throw new NotFoundException("Venue "+ request.getVenueId() +" not found.");
         for(Long attendeeId : request.getAttendeesId()) {
             Attendee attendee = this.attendeesServiceImplementation.getAttendeesById(attendeeId);
-            if(attendee == null) throw new NotFoundException("Attendee not found.");
+            if(attendee == null) throw new NotFoundException("Attendee "+attendeeId+" not found.");
         }
         Event event = this.eventServiceImplementation.updateEvent(eventId, request);
-        if(event == null) throw new NotFoundException("Event not found.");
+        if(event == null) throw new NotFoundException("Event "+eventId+" not found.");
         APIResponse<Event> response = APIResponse.<Event>builder()
                 .message("Event successfully updated.")
                 .payload(event)
@@ -85,7 +84,7 @@ public class EventController {
     @DeleteMapping("/{event-id}")
     public ResponseEntity<APIResponse<Event>> deleteEventById(@PathVariable("event-id") Long eventId) {
         Event event = this.eventServiceImplementation.deleteEventById(eventId);
-        if(event == null) throw new NotFoundException("Event not found.");
+        if(event == null) throw new NotFoundException("Event "+eventId+" not found.");
         APIResponse<Event> response = APIResponse.<Event>builder()
                 .message("Event successfully deleted.")
                 .payload(event)
