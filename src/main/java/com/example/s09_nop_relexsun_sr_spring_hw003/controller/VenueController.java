@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.time.Instant;
 import java.util.List;
@@ -50,7 +51,7 @@ public class VenueController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse<Venue>> createVenue(@RequestBody VenueRequest request) {
+    public ResponseEntity<APIResponse<Venue>> createVenue(@RequestBody @Valid VenueRequest request) {
         Venue venue = this.venueServiceImplementation.createVenue(request);
         APIResponse<Venue> response = APIResponse.<Venue>builder()
                 .message("Venue has created successfully.")
@@ -63,7 +64,7 @@ public class VenueController {
     }
 
     @PutMapping("/{venue-id}")
-    public ResponseEntity<APIResponse<Venue>> updateVenue(@PathVariable("venue-id") Long id, @RequestBody VenueRequest request) {
+    public ResponseEntity<APIResponse<Venue>> updateVenue(@PathVariable("venue-id") Long id, @RequestBody @Valid VenueRequest request) {
         Venue venue = this.venueServiceImplementation.updateVenue(id, request);
         if (venue == null) throw new NotFoundException("Venue "+id+" not found");
         APIResponse<Venue> response = APIResponse.<Venue>builder()
