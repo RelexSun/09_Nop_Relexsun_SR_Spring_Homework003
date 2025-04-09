@@ -33,38 +33,35 @@ public class EventController {
     public ResponseEntity< APIResponse<List<Event>>> getAllEvent(@RequestParam(defaultValue = "1") @Positive Integer page, @RequestParam(defaultValue = "10") @Positive Integer size) {
         page = (page - 1) * size;
         List<Event> events = this.eventServiceImplementation.getAllEvent(page, size);
-        APIResponse<List<Event>> response = APIResponse.<List<Event>>builder()
+        return ResponseEntity.status(HttpStatus.OK).body(APIResponse.<List<Event>>builder()
                 .message("All events successfully fetched.")
                 .payload(events)
                 .status(HttpStatus.OK)
                 .timestamp(Instant.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+                .build());
     }
 
     @GetMapping("/{event-id}")
     public ResponseEntity<APIResponse<Event>> getEventById(@PathVariable("event-id") Long eventId) {
         Event event = this.eventServiceImplementation.getEventById(eventId);
         if(event == null) throw new NotFoundException("Event "+eventId+" not found.");
-        APIResponse<Event> response = APIResponse.<Event>builder()
+        return ResponseEntity.status(HttpStatus.OK).body(APIResponse.<Event>builder()
                 .message("Event successfully fetched.")
                 .payload(event)
                 .status(HttpStatus.OK)
                 .timestamp(Instant.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+                .build());
     }
 
     @PostMapping
     public ResponseEntity<APIResponse<Event>> createEvent(@RequestBody @Valid EventRequest request) {
         Event event = this.eventServiceImplementation.createEvent(request);
-        APIResponse<Event> response = APIResponse.<Event>builder()
+        return ResponseEntity.status(HttpStatus.CREATED).body(APIResponse.<Event>builder()
                 .message("Event successfully created.")
                 .payload(event)
                 .status(HttpStatus.CREATED)
                 .timestamp(Instant.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+                .build());
     }
 
     @PutMapping("/{event-id}")
@@ -76,25 +73,23 @@ public class EventController {
         }
         Event event = this.eventServiceImplementation.updateEvent(eventId, request);
         if(event == null) throw new NotFoundException("Event "+eventId+" not found.");
-        APIResponse<Event> response = APIResponse.<Event>builder()
+        return ResponseEntity.status(HttpStatus.OK).body(APIResponse.<Event>builder()
                 .message("Event successfully updated.")
                 .payload(event)
                 .status(HttpStatus.OK)
                 .timestamp(Instant.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+                .build());
     }
 
     @DeleteMapping("/{event-id}")
     public ResponseEntity<APIResponse<Event>> deleteEventById(@PathVariable("event-id") Long eventId) {
         Event event = this.eventServiceImplementation.deleteEventById(eventId);
         if(event == null) throw new NotFoundException("Event "+eventId+" not found.");
-        APIResponse<Event> response = APIResponse.<Event>builder()
+        return ResponseEntity.status(HttpStatus.OK).body(APIResponse.<Event>builder()
                 .message("Event successfully deleted.")
                 .payload(event)
                 .status(HttpStatus.OK)
                 .timestamp(Instant.now())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+                .build());
     }
 }

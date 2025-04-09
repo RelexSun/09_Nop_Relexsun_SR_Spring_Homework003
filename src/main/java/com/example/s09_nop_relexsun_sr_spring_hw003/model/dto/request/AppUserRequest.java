@@ -10,8 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUserRequest {
-    private String username;
+    private String fullName;
     private String email;
     private String password;
-    private List<String> roles;
 }

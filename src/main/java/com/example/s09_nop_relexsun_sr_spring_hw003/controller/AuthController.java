@@ -1,6 +1,7 @@
 package com.example.s09_nop_relexsun_sr_spring_hw003.controller;
 
 import com.example.s09_nop_relexsun_sr_spring_hw003.jwt.JwtService;
+import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.request.AppUserRequest;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.request.AuthRequest;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.response.AuthResponse;
 import com.example.s09_nop_relexsun_sr_spring_hw003.service.AppUserService;
@@ -43,8 +44,8 @@ public class AuthController {
         return ResponseEntity.ok(authResponse);
     }
 
-//    @PostMapping("/register")
-//    public ResponseEntity<?> register(@RequestBody AppUserRequest request){
-//        return ResponseEntity.ok(appUserService.register(request));
-//    }
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody AppUserRequest request){
+        return ResponseEntity.ok(appUserService.register(request));
+    }
 }

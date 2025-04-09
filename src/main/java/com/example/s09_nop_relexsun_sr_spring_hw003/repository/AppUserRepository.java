@@ -1,5 +1,7 @@
 package com.example.s09_nop_relexsun_sr_spring_hw003.repository;
 
+import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.request.AppUserRequest;
+import com.example.s09_nop_relexsun_sr_spring_hw003.model.dto.response.AppUserResponse;
 import com.example.s09_nop_relexsun_sr_spring_hw003.model.entities.AppUser;
 import org.apache.ibatis.annotations.*;
 
@@ -23,4 +25,15 @@ public interface AppUserRepository {
     """)
     List<String> getAllRolesByUserId(Long userId);
 
+    @Select("""
+       INSERT INTO app_roles VALUES (#{userId}, #{role});
+    """)
+    void createRolesByUserId(Long userId, String role);
+
+    @ResultMap("appUserMapper")
+    @Select("""
+        INSERT INTO app_users VALUES (default, #{req.fullName}, #{req.email}, #{req.password})
+        RETURNING *;
+    """)
+    AppUser register(@Param("req") AppUserRequest request);
 }
